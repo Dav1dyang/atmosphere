@@ -5,6 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const PORT = 3000;
+require('dotenv').config();
 
 //----------cookie, session, and user login middleware----------//
 const cookieParser = require('cookie-parser');
