@@ -1,5 +1,0 @@
-.env
-node_modules/
-sessions.db
-usersdata.db
-registration.db

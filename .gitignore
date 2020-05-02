@@ -1,0 +1,5 @@
+server/.env
+server/node_modules/
+server/sessions.db
+server/usersdata.db
+server/registration.db
