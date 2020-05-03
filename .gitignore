@@ -3,3 +3,5 @@ server/node_modules/
 server/sessions.db
 server/usersdata.db
 server/registration.db
+star_itp_io.key
+star_itp_io.pem

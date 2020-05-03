@@ -1,19 +1,18 @@
 //----------server essentials setup----------//
-const http = require('http');
+const https = require('https');
 const bodyParser = require('body-parser');
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
-const PORT = 3000;
+const PORT = 4444;
 require('dotenv').config();
 
 //----------cookie, session, and user login middleware----------//
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const nedbstore = require('nedb-session-store')(session);
-const bcrypt = require('bcryptjs');
-const uuidV1 = require('uuid/v1');
-
+const bcrypt = require('bcrypt');
+const uuidV1 = require('uuid/v1'); //running with uuid@3 version in order to work
 
 //----------text analysis middleware----------//
 const Datastore = require('nedb'); //future update to mongoDB
@@ -21,6 +20,12 @@ const striptags = require('striptags');
 const Mercury = require('@postlight/mercury-parser');
 const multer = require('multer');
 //const language = require('@google-cloud/language');
+
+//----------global variable setup----------//
+var credentials = {
+	key: fs.readFileSync('star_itp_io.key'),
+	cert: fs.readFileSync('star_itp_io.pem')
+};
 
 var app = express();
 var urlencodedParser = bodyParser.urlencoded({ extended: true }); // for parsing form data
@@ -77,73 +82,100 @@ app.get('/', (req, res) => {
 		// Send the info to the user
 		res.send('You have visited this site ' + visits + ' times.' + 'session user-id: ' + req.session.userid + '. ');
 	} else {
-		req.session.loginStatus = '';
+		delete req.session.loginStatus;
 		res.redirect('/login');
 	}
 });
 
 //storing registration data to database
 app.post('/register', function (req, res) {
+	registerDB.findOne({ 'username': req.body.username }, (err, doc) => {
+		if (doc != null) {
+			req.session.alreadyRegister = 'Username already being used!';
+			res.redirect('/registration');
+		} else {
+			delete req.session.alreadyRegister;
 
-	var passwordHash = generateHash(req.body.password); // We want to 'hash' the password so that it isn't stored in clear text in the database
-	console.log(`entered: ${req.body.password} and stored ${passwordHash}`);
+			var passwordHash = generateHash(req.body.password); // We want to 'hash' the password so that it isn't stored in clear text in the database
+			console.log(`entered: ${req.body.password} and stored ${passwordHash}`);
 
-	// The information we want to store
-	var registration = {
-		'username': req.body.username,
-		'password': passwordHash
-	};
+			// The information we want to store
+			var registration = {
+				'username': req.body.username,
+				'password': passwordHash
+			};
 
-	registerDB.insert(registration); // Insert into the database
-	console.log('inserted ' + registration);
+			registerDB.insert(registration); // Insert into the database
+			console.log('inserted ' + registration);
 
-	res.send('Registered Sign In'); // Give the user an option of what to do next
-
+			res.send('Registered <a href="dy1096.itp.io:3000/">sign in</a>'); // Give the user an option of what to do next
+		}
+	});
 });
 
 app.post('/loginsubmit', (req, res) => {
 	registerDB.findOne({ 'username': req.body.username }, (err, doc) => {
 		if (doc != null) {
-			if (compareHash(req.body.passward, doc.passward)) {
+			console.log('password + hash: ' + req.body.username + ' ' + req.body.password + ' ' + doc.password);
+			if (compareHash(req.body.password, doc.password)) {
+				console.log('logincomparedtrue');
 				req.session.loginStatus = 'Loggedin';
 				req.session.username = doc.username;
 				req.session.lastlogin = Date.now();
 				res.redirect('/');
 			} else {
-				req.session.loginStatus = 'INVALID: Please try again.';
+				console.log('login Invalid password');
+				req.session.loginStatus = 'INVALID: renter your password';
 				res.redirect('/login');
 			}
 		} else {
-			req.session.loginStatus = 'INVALID: Please enter your username and passward';
-			res.redirect('/login');
+			if (req.body.username != '') {
+				console.log('login Invalid no match username');
+				req.session.loginStatus = 'INVALID: Please try again';
+				res.redirect('/login');
+			} else {
+				console.log('login Invalid no entry');
+				req.session.loginStatus = 'INVALID: Please enter your username and password';
+				res.redirect('/login');
+			}
 		}
 	});
 })
 
 //Link to the login page
 app.get('/login', (req, res) => {
+	delete req.session.alreadyRegister;
 	var data = { status: req.session.loginStatus }
-	console.log(req.session.loginStatus);
+	//console.log(req.session.loginStatus);
 	res.render('login.ejs', { data });
 });
 
 // Link to the registration page
 app.get('/registration', (req, res) => {
-	res.render('registration.ejs', {});
+	var data = { register: req.session.alreadyRegister };
+	//console.log(req.session.alreadyRegister);
+	res.render('registration.ejs', { data });
 });
 
-// generate passward's hash with salt
+// Link to the logout
+app.get('/logout', (req, res) => {
+	delete req.session.alreadyRegister;
+	delete req.session.username;
+	console.log('loggedout');
+	res.redirect('/');
+});
+
+// generate password's hash
 function generateHash(password) {
-	var salt = bcrypt.genSaltSync(10); //generate salt (extra numbers to make pw more difficult to crack)
-	return bcrypt.hashSync(password, salt);
+	return bcrypt.hashSync(password, 10);
 }
 
-//check if the stored hash is the same with the entered passward hash
+//check if the stored hash is the same with the entered password hash
 function compareHash(password, hash) {
+	console.log('Compare Hash:' + bcrypt.compareSync(password, hash));
 	return bcrypt.compareSync(password, hash);
 }
 
 //----------open port----------// 
-app.listen(PORT, function () {
-	console.log('Example app listening on port 3000!')
-});
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(PORT); 
