@@ -1,0 +1,17 @@
+<html>
+
+<head>
+    <title>atmosphere Login</title>
+</head>
+
+<body>
+    <h1> <%=data.status%></h1>
+    <form action="/signinsubmit" method="POST">
+        Username: <input type="text" name="username" placeholder="Enter Username" required><br />
+        Password: <input type="password" name="password" placeholder="Enter password" required><br />
+        <input type="submit" name="submit" value="Submit"><br />
+        <a href="/signup">Not registered?</a>
+    </form>
+</body>
+
+</html>
