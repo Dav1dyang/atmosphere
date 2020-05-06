@@ -1,16 +1,95 @@
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-	<title>atmosphere Registration</title>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Sign Up</title>
+	<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+	<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+		rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<link rel="stylesheet" type="text/css" href="signUp.css">
 </head>
 
 <body>
-	<h1> <%=data.register%></h1>
+	<h1>Create New Account:</h1><br />
+	<h2> <%=data.register%></h2> <br />
 	<form action="/register" method="POST">
-		Create Username: <input type="text" name="username" placeholder="Username" required><br />
-		Create Password: <input type="password" name="password" placeholder="Password" required><br />
-		<input type="submit" name="submit" value="Submit"><br />
+		<label class="mdc-text-field mdc-text-field--outlined firstname">
+			<input id='firstname' name="firstname" type="text" class="mdc-text-field__input" aria-labelledby="firstname"
+				required>
+			<span class="mdc-notched-outline">
+				<span class="mdc-notched-outline__leading"></span>
+				<span class="mdc-notched-outline__notch">
+					<span class="mdc-floating-label" id="firstname">First Name</span>
+				</span>
+				<span class="mdc-notched-outline__trailing"></span>
+			</span>
+		</label>
+		<br />
+		<label class="mdc-text-field mdc-text-field--outlined lastname">
+			<input id='lastname' name="lastname" type="text" class="mdc-text-field__input" aria-labelledby="lastname"
+				required>
+			<span class="mdc-notched-outline">
+				<span class="mdc-notched-outline__leading"></span>
+				<span class="mdc-notched-outline__notch">
+					<span class="mdc-floating-label" id="lastname">Last Name</span>
+				</span>
+				<span class="mdc-notched-outline__trailing"></span>
+			</span>
+		</label>
+		<br />
+		<label class="mdc-text-field mdc-text-field--outlined username">
+			<input id='username' name="username" type="text" class="mdc-text-field__input" aria-labelledby="username"
+				required>
+			<span class="mdc-notched-outline">
+				<span class="mdc-notched-outline__leading"></span>
+				<span class="mdc-notched-outline__notch">
+					<span class="mdc-floating-label" id="username">Username</span>
+				</span>
+				<span class="mdc-notched-outline__trailing"></span>
+			</span>
+		</label>
+		<br />
+		<label class="mdc-text-field mdc-text-field--outlined password">
+			<input id='password' name="password" type="password" class="mdc-text-field__input"
+				aria-labelledby="password" required minlength="6">
+			<span class="mdc-notched-outline">
+				<span class="mdc-notched-outline__leading"></span>
+				<span class="mdc-notched-outline__notch">
+					<span class="mdc-floating-label" id="password">Password</span>
+				</span>
+				<span class="mdc-notched-outline__trailing"></span>
+			</span>
+		</label>
+		<br />
+		<div class="button-container">
+			<button type="submit" name="submit" class="mdc-button signup" id='signup'>
+				<div class="mdc-button__ripple"></div>
+				<span class="mdc-button__label">Create Account</span>
+			</button>
+		</div>
+	</form>
+	<form action="https://davidyang.cc/signin?new=true">
+		<div class="button-container">
+			<button type="submit" name="submit" class="mdc-button signin" id='signin'>
+				<div class="mdc-button__ripple"></div>
+				<span class="mdc-button__label">Sign In?</span>
+			</button>
+		</div>
 	</form>
 </body>
+<script>
+	mdc.textField.MDCTextField.attachTo(document.querySelector('.firstname'));
+	mdc.textField.MDCTextField.attachTo(document.querySelector('.lastname'));
+	mdc.textField.MDCTextField.attachTo(document.querySelector('.username'));
+	mdc.textField.MDCTextField.attachTo(document.querySelector('.password'));
+	mdc.ripple.MDCRipple.attachTo(document.querySelector('.signup'));
+	mdc.ripple.MDCRipple.attachTo(document.querySelector('.signin'));
+</script>
 
 </html>

@@ -1,0 +1,37 @@
+<!-- <body>
+    <h1> <%=data.status%></h1>
+    <form action="/signinsubmit" method="POST">
+        Username: <input type="text" name="username" placeholder="Enter Username" required><br />
+        Password: <input type="password" name="password" placeholder="Enter password" required><br />
+        <input type="submit" name="submit" value="Submit"><br />
+        <a href="/signup">Not registered?</a>
+    </form>
+</body> -->
+
+
+<!-- <script>
+    $(document).ready(function () {
+        $('#signin').on('click', function (evt) {
+            var username = $('input[id="username"]').val();
+            var password = $('input[id="password"]').val();
+            var submitData = { username: username, password: password };
+            // console.log(username);
+            // console.log(password);
+            // console.log(submitData);
+            $.ajax({
+                type: 'post',
+                url: 'https://davidyang.cc/signinsubmit',
+                dataType: "json",
+                data: submitData,
+                // processData: false,
+                // contentType: false,
+                success: function (response) {
+                    // alert('success');
+                },
+                error: function (err) {
+                    // alert('error' + err);
+                }
+            });
+        });
+    });
+</script> -->

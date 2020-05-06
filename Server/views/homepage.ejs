@@ -1,0 +1,113 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Welcome to atmosphere!</title>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id"
+        content="382219507043-mn78i1knjl39o7ghstgc04aint0hqkb4.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <% if (data.signedIn != false) { %>
+    <link rel="stylesheet" type="text/css" href="homepage.css">
+    <% } else if (data.signedIn == false) { %>
+    <link rel="stylesheet" type="text/css" href="homepageSignIn.css">
+    <% } else {}%>
+</head>
+
+<body>
+    <% if (data.signedIn != false) { %>
+    <p>You have visited this site <%=data.visits%> times. session user-id: <%=data.session_id%> .
+    </p>
+    <div id="myButton" class="g-signin2" data-theme="dark"></div>
+    <div class="button-container">
+        <button type="submit" onclick="signOut();" name="submit" class="mdc-button signin" id='signin'>
+            <div class="mdc-button__ripple"></div>
+            <span class="mdc-button__label">Sign Out</span>
+        </button>
+    </div>
+    <script>
+        var x = document.getElementById("myButton");
+        x.style.display = "none";
+        function signOut() {
+
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://davidyang.cc/signoutgoogle');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                console.log('Signed in as: ' + xhr.responseText);
+            };
+            xhr.send('signoutgoogle=' + true);
+
+            setTimeout(function () { location.href = "https://davidyang.cc" }, 1000);
+
+        }
+    </script>
+    <% } else if (data.signedIn == false) { %>
+    <div class='header'>
+        <h1>atmosphere</h1><br />
+        <h2>Shape Your Enviornment</h2><br />
+    </div>
+    <figure>
+        <img class='homepageAnimation' src="assets/homepageAnimation0.gif" alt="cartoon mountain">
+        <figcaption>Source: Earth Day Sticker By Alabaster Pizzo.</figcaption>
+    </figure><br />
+    <div id="myButton" class="g-signin2" data-onsuccess="onSignIn" data-theme="light" data-width=250 data-height=40px
+        data-longtitle="true"></div>
+    <div class="button-container">
+        <form action="https://davidyang.cc/signup?new=true">
+            <button type="submit" name="submit" class="mdc-button signin" id='signin'>
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">Sign Up</span>
+            </button>
+        </form>
+        <form action="https://davidyang.cc/signin?new=true">
+            <button type="submit" name="submit" class="mdc-button signin" id='signin'>
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">Sign In</span>
+            </button>
+        </form>
+    </div>
+    <script>
+        function onSignIn(googleUser) {
+            // Useful data for your client-side scripts:
+            var profile = googleUser.getBasicProfile();
+            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+            console.log('Full Name: ' + profile.getName());
+            console.log('Given Name: ' + profile.getGivenName());
+            console.log('Family Name: ' + profile.getFamilyName());
+            console.log("Image URL: " + profile.getImageUrl());
+            console.log("Email: " + profile.getEmail());
+
+            // The ID token you need to pass to your backend:
+            var id_token = googleUser.getAuthResponse().id_token;
+            console.log("ID Token: " + id_token);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://davidyang.cc/tokensignin');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                console.log('Signed in as: ' + xhr.responseText);
+            };
+            xhr.send('idtoken=' + id_token);
+
+            setTimeout(function () { location.href = "https://davidyang.cc" }, 1000);
+
+        }
+    </script>
+
+    <% } else {}%>
+</body>
+
+</html>

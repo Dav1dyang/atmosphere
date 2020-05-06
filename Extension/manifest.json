@@ -1,0 +1,41 @@
+{
+    "author": "David Yang",
+    "manifest_version": 2,
+    "name": "atmosphere",
+    "version": "0.0.1",
+    "browser_action": {
+        "default_icon": {
+            "16": "agriculture16.png",
+            "32": "agriculture32.png",
+            "64": "agriculture64.png",
+            "128": "agriculture128.png"
+        },
+        "default_title": "atmosphere",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "scripts": [
+            "background.js",
+            "popup.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "icons": {
+        "16": "agriculture16.png",
+        "32": "agriculture32.png",
+        "64": "agriculture64.png",
+        "128": "agriculture128.png"
+    },
+    "permissions": [
+        "https://davidyang.cc/*"
+    ]
+}
