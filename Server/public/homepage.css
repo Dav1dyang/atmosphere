@@ -5,14 +5,13 @@ html, body {
 }
 
 h1 {
-  padding: 10px;
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 30;
   color: #202A25;
   width: 250px;
   height: 0;
-  margin: 10px auto;
+  margin: 20px auto;
   text-align: center;
 }
 
