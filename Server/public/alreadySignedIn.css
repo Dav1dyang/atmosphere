@@ -3,13 +3,13 @@ html, body {
   padding: 0;
   background-color: #EAF2D7;
 }
+
 h1 {
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
-  font-size: 30;
+  font-size: medium;
   color: #202A25;
   width: 250px;
-  height: 5px;
   margin: 20px auto;
   text-align: center;
 }
@@ -20,17 +20,9 @@ h2 {
     font-weight: 500;
     color: #FF6B35;
     width: 250px;
-    height: 5px;
+    height: 10px;
     margin: 1px auto;
     text-align: center;
-}
-.firstname,
-.lastname,
-.username,
-.password {
-  display: flex;
-  margin: 2px auto;
-  width: 250px;
 }
 
 .button-container {
@@ -41,16 +33,5 @@ h2 {
 }
 
 .button-container button {
-  margin: 3px;
-}
-
-.homepageAnimation{
-  max-width: 100%;
-  height: auto;
-}
-
-#myButton {
-  display: flex;
-  margin: 2px auto;
-  width: 250px;
+  margin: 0px;
 }

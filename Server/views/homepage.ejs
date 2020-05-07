@@ -1,9 +1,9 @@
+<!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Welcome to atmosphere!</title>
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id"
         content="382219507043-mn78i1knjl39o7ghstgc04aint0hqkb4.apps.googleusercontent.com">
@@ -16,8 +16,10 @@
         rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <% if (data.signedIn != false) { %>
+    <title>Homepage</title>
     <link rel="stylesheet" type="text/css" href="homepage.css">
     <% } else if (data.signedIn == false) { %>
+    <title>Welcome to atmosphere!</title>
     <link rel="stylesheet" type="text/css" href="homepageSignIn.css">
     <% } else {}%>
 </head>
@@ -28,12 +30,13 @@
     </p>
     <div id="myButton" class="g-signin2" data-theme="dark"></div>
     <div class="button-container">
-        <button type="submit" onclick="signOut();" name="submit" class="mdc-button signin" id='signin'>
+        <button type="submit" onclick="signOut();" name="submit" class="mdc-button signout" id='signout'>
             <div class="mdc-button__ripple"></div>
             <span class="mdc-button__label">Sign Out</span>
         </button>
     </div>
     <script>
+        mdc.ripple.MDCRipple.attachTo(document.querySelector('.signout'));
         var x = document.getElementById("myButton");
         x.style.display = "none";
         function signOut() {
@@ -67,7 +70,7 @@
         data-longtitle="true"></div>
     <div class="button-container">
         <form action="https://davidyang.cc/signup?new=true">
-            <button type="submit" name="submit" class="mdc-button signin" id='signin'>
+            <button type="submit" name="submit" class="mdc-button signup" id='signup'>
                 <div class="mdc-button__ripple"></div>
                 <span class="mdc-button__label">Sign Up</span>
             </button>
@@ -78,8 +81,34 @@
                 <span class="mdc-button__label">Sign In</span>
             </button>
         </form>
+        <button type="button" name="test" class="mdc-button test" id='test'>
+            <div class="mdc-button__ripple"></div>
+            <span class="mdc-button__label">test</span>
+        </button>
+    </div>
+    <div class="mdc-snackbar">
+        <div class="mdc-snackbar__surface">
+            <div class="mdc-snackbar__label" role="status" aria-live="polite" id='label_text'>
+                Default Notification.
+            </div>
+            <div class="mdc-snackbar__actions">
+                <button type="button" class="mdc-button mdc-snackbar__action">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label" id='button_text'>Action_Button</span>
+                </button>
+            </div>
+        </div>
     </div>
     <script>
+        mdc.ripple.MDCRipple.attachTo(document.querySelector('.signup'));
+        mdc.ripple.MDCRipple.attachTo(document.querySelector('.signin'));
+        console.log(document.querySelector('.mdc-snackbar'));
+        console.log(document.querySelector('.signin'));
+        console.log(document.querySelector('.signup'));
+        document.getElementById("label_text").innerHTML = "atmosphere use cookies to customize your experience.";
+        document.getElementById("button_text").innerHTML = "Close";
+        const snackBar = mdc.snackbar.MDCSnackbar.attachTo(document.querySelector('.mdc-snackbar'));
+        snackBar.open();
         function onSignIn(googleUser) {
             // Useful data for your client-side scripts:
             var profile = googleUser.getBasicProfile();

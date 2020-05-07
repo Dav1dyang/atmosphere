@@ -89,6 +89,7 @@ app.get('/', (req, res) => {
 		}
 
 		// Log the cookies on the server side
+		console.log('cookie:');
 		console.log(req.cookies);
 
 		// Variable per request to keep track of visits
@@ -213,14 +214,18 @@ app.get('/signin', (req, res) => {
 
 // Link to the registration page
 app.get('/signup', (req, res) => {
-	if (req.query.new || req.query.submit == '') {
-		req.session.alreadyRegister = null;
-		var data = { register: req.session.alreadyRegister };
-		res.render('signUp.ejs', { data });
+	if (req.session.signedIn == true) {
+		res.render('alreadySignedIn.ejs', {});
 	} else {
-		var data = { register: req.session.alreadyRegister };
-		//console.log(req.session.alreadyRegister);
-		res.render('signUp.ejs', { data });
+		if (req.query.new || req.query.submit == '') {
+			req.session.alreadyRegister = null;
+			var data = { register: req.session.alreadyRegister };
+			res.render('signUp.ejs', { data });
+		} else {
+			var data = { register: req.session.alreadyRegister };
+			//console.log(req.session.alreadyRegister);
+			res.render('signUp.ejs', { data });
+		}
 	}
 });
 
@@ -241,7 +246,7 @@ app.post('/signoutgoogle', (req, res) => {
 		req.session.username = null;
 		req.session.signInName = null;
 		// console.log(req.session.signedIn);
-		console.log('google signed out');
+		console.log('google signed out (include normal sign out)');
 	} else {
 		console.log('google still signed in');
 	}
@@ -286,6 +291,16 @@ app.post('/tokensignin', (req, res) => {
 
 		});
 });
+
+
+app.post('/uploadchromedata', (req, res) => {
+	//store data base on user
+	//change req.session.username = googleuser's sub
+	//create session variable userFirstName and firstTime
+	//warn user about cookies
+	//create a privacy policy, what is atmosphere, and example page
+	//if (req.session.username == req.cookies.username)
+})
 
 // generate password's hash
 function generateHash(password) {

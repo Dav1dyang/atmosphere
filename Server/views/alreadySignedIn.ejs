@@ -1,12 +1,35 @@
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="alreadySignedIn.css">
     <title>Signed In</title>
 </head>
 
 <body>
-    <h1> You already signed In. </h1>
-    <a href="https://davidyang.cc"> back to homepage </a>
+    <h1> You already signed In. </h1><br />
+    <div class="button-container">
+        <form action="https://davidyang.cc/">
+            <div class="button-container">
+                <button type="submit" name="submit" class="mdc-button signin" id='signin'>
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label">Back to Homepage</span>
+                </button>
+            </div>
+        </form>
+    </div>
+    <script>
+        mdc.ripple.MDCRipple.attachTo(document.querySelector('.signin'));
+    </script>
 </body>
 
 </html>

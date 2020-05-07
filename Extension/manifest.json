@@ -10,13 +10,15 @@
             "64": "agriculture64.png",
             "128": "agriculture128.png"
         },
-        "default_title": "atmosphere",
-        "default_popup": "popup.html"
+        "default_title": "atmosphere"
     },
+    "web_accessible_resources": [
+        "homepageSignIn.css",
+        "homepageAnimation0.gif"
+    ],
     "background": {
         "scripts": [
-            "background.js",
-            "popup.js"
+            "background.js"
         ]
     },
     "content_scripts": [
@@ -36,6 +38,12 @@
         "128": "agriculture128.png"
     },
     "permissions": [
-        "https://davidyang.cc/*"
-    ]
+        "tabs",
+        "https://davidyang.cc/*",
+        "https://unpkg.com/*",
+        "https://apis.google.com/*",
+        "https://fonts.googleapis.com/",
+        "https://code.jquery.com/"
+    ],
+    "content_security_policy": "script-src 'self' https://davidyang.cc/* https://apis.google.com/ https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js https://fonts.googleapis.com/ https://code.jquery.com/; object-src 'self'"
 }
