@@ -17,17 +17,21 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <% if (data.signedIn != false) { %>
     <title>Homepage</title>
-    <link rel="stylesheet" type="text/css" href="homepage.css">
+    <link rel="stylesheet" type="text/css" href="homepageSignIn.css">
     <% } else if (data.signedIn == false) { %>
     <title>Welcome to atmosphere!</title>
-    <link rel="stylesheet" type="text/css" href="homepageSignIn.css">
+    <link rel="stylesheet" type="text/css" href="homepage.css">
     <% } else {}%>
 </head>
 
 <body>
     <% if (data.signedIn != false) { %>
-    <p>You have visited this site <%=data.visits%> times. session user-id: <%=data.session_id%> .
-    </p>
+    <h1>Hi <%=data.firstName%>! Here are the websites you visited: </h1><br />
+    <ul class="list" id="listURL">
+        <li>http://example.com</li>
+        <li>https://www.example.com</li>
+    </ul><br />
+    <p>You have visited this site <%=data.visits%> times.</p>
     <div id="myButton" class="g-signin2" data-theme="dark"></div>
     <div class="button-container">
         <button type="submit" onclick="signOut();" name="submit" class="mdc-button signout" id='signout'>
@@ -36,6 +40,34 @@
         </button>
     </div>
     <script>
+        var node;
+        var textnode;
+        var datalength;
+        var datalengthm12;
+        function fetchdata() {
+            $('#listURL').empty();
+            $.ajax({
+                url: "https://davidyang.cc/getdata",
+                dataType: 'json',
+                success: function (data) {
+                    datalength = data.urls.length - 1
+                    datalengthm12 = data.urls.length - 12
+                    for (var i = datalength; i > datalengthm12; i--) {
+                        node = document.createElement("LI");
+                        textnode = document.createTextNode(data.urls[i]);
+                        node.appendChild(textnode);
+                        document.getElementById("listURL").appendChild(node);
+                        console.log(data.urls[i]);
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        }
+        $(document).ready(function () {
+            setInterval(fetchdata, 10000);
+        });
         mdc.ripple.MDCRipple.attachTo(document.querySelector('.signout'));
         var x = document.getElementById("myButton");
         x.style.display = "none";
@@ -69,6 +101,12 @@
     <div id="myButton" class="g-signin2" data-onsuccess="onSignIn" data-theme="light" data-width=250 data-height=40px
         data-longtitle="true"></div>
     <div class="button-container">
+        <form action="https://davidyang.cc/about">
+            <button type="submit" name="about" class="mdc-button about" id='about'>
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">about</span>
+            </button>
+        </form>
         <form action="https://davidyang.cc/signup?new=true">
             <button type="submit" name="submit" class="mdc-button signup" id='signup'>
                 <div class="mdc-button__ripple"></div>
@@ -81,10 +119,6 @@
                 <span class="mdc-button__label">Sign In</span>
             </button>
         </form>
-        <button type="button" name="test" class="mdc-button test" id='test'>
-            <div class="mdc-button__ripple"></div>
-            <span class="mdc-button__label">test</span>
-        </button>
     </div>
     <div class="mdc-snackbar">
         <div class="mdc-snackbar__surface">
@@ -99,16 +133,20 @@
             </div>
         </div>
     </div>
+    <% if (data.firstTime == true) { %>
     <script>
+        const snackBar = mdc.snackbar.MDCSnackbar.attachTo(document.querySelector('.mdc-snackbar'));
+        document.getElementById("label_text").innerHTML = "atmosphere use cookies and chrome API to customize your experience.";
+        document.getElementById("button_text").innerHTML = "Close";
+        snackBar.open();
+        snackBar.timeoutMs = -1;
+        console.log('first time visit');
+    </script>
+    <% } else{}%>
+    <script>
+        mdc.ripple.MDCRipple.attachTo(document.querySelector('.about'));
         mdc.ripple.MDCRipple.attachTo(document.querySelector('.signup'));
         mdc.ripple.MDCRipple.attachTo(document.querySelector('.signin'));
-        console.log(document.querySelector('.mdc-snackbar'));
-        console.log(document.querySelector('.signin'));
-        console.log(document.querySelector('.signup'));
-        document.getElementById("label_text").innerHTML = "atmosphere use cookies to customize your experience.";
-        document.getElementById("button_text").innerHTML = "Close";
-        const snackBar = mdc.snackbar.MDCSnackbar.attachTo(document.querySelector('.mdc-snackbar'));
-        snackBar.open();
         function onSignIn(googleUser) {
             // Useful data for your client-side scripts:
             var profile = googleUser.getBasicProfile();

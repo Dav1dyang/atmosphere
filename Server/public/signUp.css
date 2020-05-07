@@ -18,7 +18,7 @@ h1 {
 h2 {
     font-family: 'Roboto', sans-serif;
     font-size: small;
-    color: #FF6B35;
+    color: #F46036;
     width: 250px;
     height: 5px;
     margin: 0 auto;
@@ -43,4 +43,40 @@ h2 {
 
 .button-container button {
   margin: 3px;
+}
+
+.mdc-button {
+  --mdc-theme-primary: #202A25;
+}
+
+.mdc-snackbar__action:not(:disabled) {
+  color: #202A25;
+}
+
+.mdc-text-field{
+  --mdc-theme-primary: #202A25;
+}
+
+.mdc-text-field .mdc-line-ripple {
+  background-color: #202A25;
+  /* @alternate */
+  background-color: var(--mdc-theme-primary, #202A25);
+}
+
+.mdc-text-field .mdc-text-field__input {
+  caret-color: #202A25;
+  /* @alternate */
+  caret-color: var(--mdc-theme-primary, #202A25);
+}
+
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing {
+  border-color: #202A25;
+  /* @alternate */
+  border-color: var(--mdc-theme-primary, #202A25);
+}
+
+.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: #202A25;
 }

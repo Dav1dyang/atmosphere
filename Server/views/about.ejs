@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>About</title>
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="about.css">
+</head>
+
+<body>
+    <h1>atmosphere is about digital wellness.</h1>
+    <h2>Hypothesis:</h2> <br />
+    <p>This is a chrome extension that will collect users’ interactions with the internet and show it as an environment
+        on a website along with other people’s environments. This project will prompt the user to feel their
+        interaction with the internet as an atmosphere, allowing user to take control over his internet identity and
+        environment.</p><br />
+    <form action="https://davidyang.cc/">
+        <div class="button-container">
+            <button type="submit" class="mdc-button back" id='back'>
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">Back to Homepage</span>
+            </button>
+        </div>
+    </form>
+</body>
+<script>
+    mdc.ripple.MDCRipple.attachTo(document.querySelector('.back'));
+</script>
+
+</html>

@@ -3,34 +3,46 @@ html, body {
   padding: 0;
   background-color: #EAF2D7;
 }
+
 h1 {
+  padding: 10px;
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 30;
   color: #202A25;
   width: 250px;
-  height: 5px;
-  margin: 20px auto;
+  height: 0;
+  margin: 10px auto;
   text-align: center;
 }
 
 h2 {
     font-family: 'Roboto', sans-serif;
     font-size: small;
-    font-weight: 500;
-    color: #FF6B35;
+    font-weight: 400;
+    color: #306B34;
     width: 250px;
-    height: 5px;
+    height: 10px;
     margin: 1px auto;
     text-align: center;
 }
-.firstname,
-.lastname,
-.username,
-.password {
-  display: flex;
-  margin: 2px auto;
-  width: 250px;
+
+figcaption{
+  font-family: 'Roboto', sans-serif;
+    font-size: xx-small;
+    font-weight: 300;
+    color: #777777;
+    text-align: center;
+}
+
+.header{
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background: #BBE09A;
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
 }
 
 .button-container {
@@ -41,16 +53,35 @@ h2 {
 }
 
 .button-container button {
-  margin: 3px;
+  margin: 5px;
 }
 
 .homepageAnimation{
-  max-width: 100%;
-  height: auto;
+  max-width: 500px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 99%;
 }
 
 #myButton {
   display: flex;
-  margin: 2px auto;
+  margin: 5px auto;
   width: 250px;
+}
+
+.mdc-button {
+  --mdc-theme-primary: #202A25;
+}
+
+.mdc-snackbar__action:not(:disabled) {
+  color: #202A25;
+}
+
+.mdc-snackbar__surface {
+  background-color: rgb(255, 254, 244);
+}
+
+.mdc-snackbar__label{
+  color: #202A25;
 }

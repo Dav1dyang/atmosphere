@@ -80,12 +80,19 @@ app.use(
 );
 
 //----------cookie, session, and sign in----------//
+app.get('/about', (req, res) => {
+	res.render('about.ejs', {})
+});
+
 app.get('/', (req, res) => {
 	//console.log(req.session.username);
 	if (req.session.username != null) {
 
 		if (!req.session.userid) {
 			req.session.userid = uuidV1();
+			req.session.firstTime = true;
+		} else {
+			req.session.firstTime = null;
 		}
 
 		// Log the cookies on the server side
@@ -102,25 +109,30 @@ app.get('/', (req, res) => {
 
 		// Set the new or updated cookie
 		res.cookie('visits', visits, {});
-
 		// Send the info to the user
 		let data = {
 			visits: visits,
 			session_id: req.session.userid,
-			signedIn: true
+			signedIn: true,
+			firstTime: req.session.firstTime,
+			firstName: req.session.userFirstName
 		}
 		res.render('homepage.ejs', { data });
 		//res.send('You have visited this site ' + visits + ' times.' + 'session user-id: ' + req.session.userid + '. ');
 	} else {
 		if (!req.session.userid) {
 			req.session.userid = uuidV1();
+			req.session.firstTime = true;
+		} else {
+			req.session.firstTime = null;
 		}
 		req.session.signInStatus = null;
 
 		let data = {
 			visits: visits,
 			session_id: req.session.userid,
-			signedIn: false
+			signedIn: false,
+			firstTime: req.session.firstTime
 		}
 		res.render('homepage.ejs', { data });
 	}
@@ -147,9 +159,12 @@ app.post('/register', function (req, res) {
 				'lastname': req.body.lastname,
 				'password': passwordHash
 			};
+
+			let userdata = { 'username': req.body.username, urls: [] };
+			usersdataDB.insert(userdata);
+
 			req.session.signInName = req.body.firstname;
-			registerDB.insert(registration); // Insert into the database
-			//console.log('inserted ' + registration);
+			registerDB.insert(registration);
 			req.session.signedIn = false;
 			req.session.signInStatus = null;
 			res.redirect('/signin');
@@ -167,7 +182,8 @@ app.post('/signinsubmit', (req, res) => {
 				console.log('signincomparedtrue');
 				req.session.signInStatus = 'signned in';
 				req.session.signedIn = true;
-				req.session.username = doc.firstname;
+				req.session.username = doc.username;
+				req.session.userFirstName = doc.firstname;
 				req.session.lastSignIn = Date.now();
 				res.redirect('/');
 			} else {
@@ -234,6 +250,7 @@ app.get('/signout', (req, res) => {
 	req.session.signedIn = false;
 	req.session.alreadyRegister = null;
 	req.session.username = null;
+	req.session.userFirstName = null;
 	req.session.signInName = null;
 	console.log('signed out');
 	res.redirect('/');
@@ -244,6 +261,7 @@ app.post('/signoutgoogle', (req, res) => {
 		req.session.signedIn = false;
 		req.session.alreadyRegister = null;
 		req.session.username = null;
+		req.session.userFirstName = null;
 		req.session.signInName = null;
 		// console.log(req.session.signedIn);
 		console.log('google signed out (include normal sign out)');
@@ -268,7 +286,8 @@ app.post('/tokensignin', (req, res) => {
 			registerDB.findOne({ 'username': googleUser.sub }, (err, doc) => {
 				if (doc != null) {
 					// req.session.googleRegistered = true;
-					req.session.username = doc.firstname;
+					req.session.username = googleUser.sub;
+					req.session.userFirstName = googleUser.given_name;
 					console.log('google user signed in');
 					// console.log(doc.firstname);
 					// console.log(req.session.username);
@@ -276,13 +295,16 @@ app.post('/tokensignin', (req, res) => {
 					req.session.save();
 				} else {
 					req.session.alreadyRegister = null;
-					req.session.username = googleUser.given_name;
+					req.session.username = googleUser.sub;
+					req.session.userFirstName = googleUser.given_name;
 					let registration = {
 						'username': googleUser.sub,
 						'firstname': googleUser.given_name,
 						'lastname': googleUser.family_name,
 						'password': null
 					};
+					let userdata = { 'username': googleUser.sub, urls: [] };
+					usersdataDB.insert(userdata);
 					registerDB.insert(registration);
 					console.log('registered new google user into database');
 					req.session.save();
@@ -292,15 +314,23 @@ app.post('/tokensignin', (req, res) => {
 		});
 });
 
-
-app.post('/uploadchromedata', (req, res) => {
-	//store data base on user
-	//change req.session.username = googleuser's sub
-	//create session variable userFirstName and firstTime
-	//warn user about cookies
-	//create a privacy policy, what is atmosphere, and example page
-	//if (req.session.username == req.cookies.username)
+//create a privacy policy, what is atmosphere, and example page
+app.post('/senddata', (req, res) => {
+	// console.log(req.body.currentURL);
+	// console.log(req.session.username);
+	if (req.session.username) {
+		usersdataDB.update({ username: req.session.username }, { $push: { urls: req.body.currentURL } }, {}, function (doc) {
+		});
+	}
 })
+
+app.get('/getdata', (req, res) => {
+	if (req.session.username) {
+		usersdataDB.findOne({ 'username': req.session.username }, (err, doc) => {
+			res.send(doc);
+		});
+	}
+});
 
 // generate password's hash
 function generateHash(password) {

@@ -1,0 +1,50 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #EAF2D7;
+}
+h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: x-large;
+    color: #202A25;
+    width: 250px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: large;
+    font-weight: 300;
+    color: #306B34;
+    width: 250px;
+    margin: auto;
+    text-align: left;
+}
+
+p {
+  font-family: 'Roboto', sans-serif;
+    font-size: medium;
+    font-weight: 300;
+    color: #202A25;
+    width: 250px;
+    margin: auto;
+    text-align: left;
+}
+
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 250px;
+  margin: auto;
+}
+
+.button-container button {
+  margin: 3px;
+}
+
+.mdc-button {
+  --mdc-theme-primary: #202A25;
+}
