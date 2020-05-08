@@ -26,7 +26,8 @@
 
 <body>
     <% if (data.signedIn != false) { %>
-    <h1>Hi <%=data.firstName%>! Here are the websites you visited: </h1><br />
+    <h1>Hi <%=data.firstName%>! </h1><br />
+    <img class='homepageAnimation' src="assets/ScreenShot.png" alt=" proto interface png"><br />
     <ul class="list" id="listURL">
         <li>http://example.com</li>
         <li>https://www.example.com</li>
@@ -51,7 +52,7 @@
                 dataType: 'json',
                 success: function (data) {
                     datalength = data.urls.length - 1
-                    datalengthm12 = data.urls.length - 12
+                    datalengthm12 = data.urls.length - 3
                     for (var i = datalength; i > datalengthm12; i--) {
                         node = document.createElement("LI");
                         textnode = document.createTextNode(data.urls[i]);
