@@ -1,9 +1,11 @@
 # Atmodphere - 2020 Networked Media Final Project
 
 Description:
+
 This is a chrome extension that will collect user's browser activities and then generate visual presentations of the activities on a website.
 
 Concept:
+
 The practice of data collection often comes with polarized public debates between personal rights and societal optimizations. While data collection is necessary for the modern society to function, it also brings the world closer to dystopia such as 1984 or The Brave New World like never before. Like the trolley problem, the infamous ethical dilemma, there is no brake to the practice of data collection but only decisions for where it should go and which consequences to take.  For instance, contact tracing, a way to track individual’s locations and human contacts and one of the crucial practices to prevent the spread of COVID-19, is saving lives by trading off individual’s privacy. At the same time contact tracing technology is allowing government to track down political unrest. While the polarized public debates provide solid arguments and important regulations, one must see the middle ground and its possibility beyond.
 How could we re-imagine data collection? Contrary to the public opinion, I believe data collection has a greater purpose beyond its scientific and corporate use. Data collection is an ancient practice for individuals to understand humanity and its relationship to the world. I believe that the nature of art, which includes exploration in humanity, is almost identical to the practice of data collection where data act as human’s interpretation of the world. Artworks like cave painting, which act as a form of data collection, help human evolving in visual communications. Likewise, Vincent Van Gogh’s paintings act as his practice of data collection that provides reflections and insights about his depression.
 In the digital age, the use of data collection seems to be providing express services and companies revenues. How can modern practice of data collection help the user explore him/herself, the humanity, and the world? Instead of feeding into artificial intelligence that guess our behaviors and provide solutions that ultimately lock us into a predictable pattern, why can’t the data collection help individuals to evolves in our unique ways?
