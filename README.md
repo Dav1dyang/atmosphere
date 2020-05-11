@@ -1,7 +1,7 @@
 # Atmodphere - 2020 Networked Media Final Project
 
 Description:
-This is a chrome extension that will collect user's browser activities and then generate visual presentations of the activities on a website.\
+This is a chrome extension that will collect user's browser activities and then generate visual presentations of the activities on a website.
 
 Concept:
 The practice of data collection often comes with polarized public debates between personal rights and societal optimizations. While data collection is necessary for the modern society to function, it also brings the world closer to dystopia such as 1984 or The Brave New World like never before. Like the trolley problem, the infamous ethical dilemma, there is no brake to the practice of data collection but only decisions for where it should go and which consequences to take.  For instance, contact tracing, a way to track individual’s locations and human contacts and one of the crucial practices to prevent the spread of COVID-19, is saving lives by trading off individual’s privacy. At the same time contact tracing technology is allowing government to track down political unrest. While the polarized public debates provide solid arguments and important regulations, one must see the middle ground and its possibility beyond.
